@@ -145,8 +145,7 @@ void BratFatAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce
     auto* outR = buffer.getWritePointer(1);
 
     for (int sample = 0; sample < buffer.getNumSamples(); sample++) {
-        juce::MidiMessage a = juce::MidiMessage(0, 13, 127.f);
-        f = juce::MidiMessage::getMidiNoteInHertz(a.getNoteNumber());
+
         for (const auto metadata : midiMessages)
         {
             auto message = metadata.getMessage();
@@ -154,8 +153,12 @@ void BratFatAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce
 
             if (message.isNoteOn())
             {
-                juce::MidiMessage a = juce::MidiMessage(0, 13, 127.f);
-                f = juce::MidiMessage::getMidiNoteInHertz(a.getNoteNumber());
+                f = juce::MidiMessage::getMidiNoteInHertz(message.getNoteNumber());
+            }
+            if (message.isNoteOff())
+            {
+                f = 0;
+                phase = 0;
             }
 
         }

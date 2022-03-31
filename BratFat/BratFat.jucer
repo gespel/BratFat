@@ -2,7 +2,8 @@
 
 <JUCERPROJECT id="TAh0oA" name="BratFat" projectType="audioplug" useAppConfig="0"
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1"
-              pluginFormats="buildVST3">
+              pluginFormats="buildVST3" pluginCharacteristicsValue="pluginWantsMidiIn"
+              pluginVST3Category="Instrument">
   <MAINGROUP id="Db8dGg" name="BratFat">
     <GROUP id="{F60E5627-2569-D76A-2B4A-32900A2F9C3B}" name="Source">
       <FILE id="J9XjCp" name="SoundGenerator.cpp" compile="1" resource="0"
