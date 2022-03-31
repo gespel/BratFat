@@ -9,10 +9,14 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include "SoundGenerator.h"
 
 //==============================================================================
 /**
 */
+
+
+
 class BratFatAudioProcessor  : public juce::AudioProcessor
 {
 public:
@@ -52,8 +56,13 @@ public:
     //==============================================================================
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
+    bool isAddingFromMidiInput = false;
+    //void juce::MidiInputCallback::handleIncomingMidiMessage(juce::MidiInput, const juce::MidiMessage& message) override;
+    double f = 0.f;
 
 private:
     //==============================================================================
+    
+    double phase = 0.f;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (BratFatAudioProcessor)
 };

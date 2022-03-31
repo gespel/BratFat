@@ -10,9 +10,7 @@
 #include "PluginEditor.h"
 
 //==============================================================================
-BratFatAudioProcessor::BratFatAudioProcessor()
-#ifndef JucePlugin_PreferredChannelConfigurations
-     : AudioProcessor (BusesProperties()
+BratFatAudioProcessor::BratFatAudioProcessor() : AudioProcessor (BusesProperties()
                      #if ! JucePlugin_IsMidiEffect
                       #if ! JucePlugin_IsSynth
                        .withInput  ("Input",  juce::AudioChannelSet::stereo(), true)
@@ -20,13 +18,14 @@ BratFatAudioProcessor::BratFatAudioProcessor()
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
                        )
-#endif
+
 {
 }
 
 BratFatAudioProcessor::~BratFatAudioProcessor()
 {
 }
+
 
 //==============================================================================
 const juce::String BratFatAudioProcessor::getName() const
@@ -90,11 +89,11 @@ void BratFatAudioProcessor::changeProgramName (int index, const juce::String& ne
 {
 }
 
+
+
 //==============================================================================
 void BratFatAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-    // Use this method as the place to do any pre-playback
-    // initialisation that you need..
 }
 
 void BratFatAudioProcessor::releaseResources()
@@ -135,26 +134,36 @@ void BratFatAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce
     auto totalNumInputChannels  = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
 
-    // In case we have more outputs than inputs, this code clears any output
-    // channels that didn't contain input data, (because these aren't
-    // guaranteed to be empty - they may contain garbage).
-    // This is here to avoid people getting screaming feedback
-    // when they first compile a plugin, but obviously you don't need to keep
-    // this code if your algorithm always overwrites all the output channels.
+    /*for (auto msg : midiMessages) {
+        f = juce::MidiMessage::getMidiNoteInHertz(msg.getMessage().getNoteNumber());
+    }*/
+
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
 
-    // This is the place where you'd normally do the guts of your plugin's
-    // audio processing...
-    // Make sure to reset the state if your inner loop is processing
-    // the samples and the outer loop is handling the channels.
-    // Alternatively, you can process the samples with the channels
-    // interleaved by keeping the same state.
-    for (int channel = 0; channel < totalNumInputChannels; ++channel)
-    {
-        auto* channelData = buffer.getWritePointer (channel);
+    auto* outL = buffer.getWritePointer(0);
+    auto* outR = buffer.getWritePointer(1);
 
-        // ..do something to the data...
+    for (int sample = 0; sample < buffer.getNumSamples(); sample++) {
+        juce::MidiMessage a = juce::MidiMessage(0, 13, 127.f);
+        f = juce::MidiMessage::getMidiNoteInHertz(a.getNoteNumber());
+        for (const auto metadata : midiMessages)
+        {
+            auto message = metadata.getMessage();
+            const auto time = metadata.samplePosition;
+
+            if (message.isNoteOn())
+            {
+                juce::MidiMessage a = juce::MidiMessage(0, 13, 127.f);
+                f = juce::MidiMessage::getMidiNoteInHertz(a.getNoteNumber());
+            }
+
+        }
+
+        auto currentSample = (float)std::sin(phase);
+        phase += ((f) / getSampleRate()) * 2.0f * 3.14159265;
+        outL[sample] = currentSample;
+        outR[sample] = currentSample;
     }
 }
 
@@ -182,6 +191,10 @@ void BratFatAudioProcessor::setStateInformation (const void* data, int sizeInByt
     // You should use this method to restore your parameters from this memory block,
     // whose contents will have been created by the getStateInformation() call.
 }
+
+/*void BratFatAudioProcessor::handleIncomingMidiMessage(juce::MidiInput, const juce::MidiMessage& message)
+{
+}*/
 
 //==============================================================================
 // This creates new instances of the plugin..
