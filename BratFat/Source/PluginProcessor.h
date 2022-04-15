@@ -9,7 +9,7 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "SoundGenerator.h"
+#include "BratFat.h"
 
 //==============================================================================
 /**
@@ -62,7 +62,6 @@ public:
 
 private:
     //==============================================================================
-    
-    double phase = 0.f;
+    BratFat b;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (BratFatAudioProcessor)
 };

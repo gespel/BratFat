@@ -6,10 +6,8 @@
               pluginVST3Category="Instrument">
   <MAINGROUP id="Db8dGg" name="BratFat">
     <GROUP id="{F60E5627-2569-D76A-2B4A-32900A2F9C3B}" name="Source">
-      <FILE id="J9XjCp" name="SoundGenerator.cpp" compile="1" resource="0"
-            file="Source/SoundGenerator.cpp"/>
-      <FILE id="oPnGFe" name="SoundGenerator.h" compile="0" resource="0"
-            file="Source/SoundGenerator.h"/>
+      <FILE id="BZBAMS" name="BratFat.cpp" compile="1" resource="0" file="Source/BratFat.cpp"/>
+      <FILE id="eD4cUJ" name="BratFat.h" compile="0" resource="0" file="Source/BratFat.h"/>
       <FILE id="yCsL86" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="x1u7A7" name="PluginProcessor.h" compile="0" resource="0"

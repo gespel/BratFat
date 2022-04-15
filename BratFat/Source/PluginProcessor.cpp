@@ -10,7 +10,7 @@
 #include "PluginEditor.h"
 
 //==============================================================================
-BratFatAudioProcessor::BratFatAudioProcessor() : AudioProcessor (BusesProperties()
+BratFatAudioProcessor::BratFatAudioProcessor() : b(), AudioProcessor (BusesProperties()
                      #if ! JucePlugin_IsMidiEffect
                       #if ! JucePlugin_IsSynth
                        .withInput  ("Input",  juce::AudioChannelSet::stereo(), true)
@@ -94,6 +94,7 @@ void BratFatAudioProcessor::changeProgramName (int index, const juce::String& ne
 //==============================================================================
 void BratFatAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
+    b.setSampleRate(sampleRate);
 }
 
 void BratFatAudioProcessor::releaseResources()
@@ -134,40 +135,11 @@ void BratFatAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce
     auto totalNumInputChannels  = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
 
-    /*for (auto msg : midiMessages) {
-        f = juce::MidiMessage::getMidiNoteInHertz(msg.getMessage().getNoteNumber());
-    }*/
-
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
 
-    auto* outL = buffer.getWritePointer(0);
-    auto* outR = buffer.getWritePointer(1);
-
-    for (int sample = 0; sample < buffer.getNumSamples(); sample++) {
-
-        for (const auto metadata : midiMessages)
-        {
-            auto message = metadata.getMessage();
-            const auto time = metadata.samplePosition;
-
-            if (message.isNoteOn())
-            {
-                f = juce::MidiMessage::getMidiNoteInHertz(message.getNoteNumber());
-            }
-            if (message.isNoteOff())
-            {
-                f = 0;
-                phase = 0;
-            }
-
-        }
-
-        auto currentSample = (float)std::sin(phase);
-        phase += ((f) / getSampleRate()) * 2.0f * 3.14159265;
-        outL[sample] = currentSample;
-        outR[sample] = currentSample;
-    }
+    b.loadBuffer(&buffer, &midiMessages);
+    b.process();
 }
 
 //==============================================================================
