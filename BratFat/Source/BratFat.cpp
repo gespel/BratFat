@@ -34,7 +34,7 @@ void BratFat::processMidi() {
             envelope = 1;
             frequency = juce::MidiMessage::getMidiNoteInHertz(message.getNoteNumber());
         }
-        if (message.isNoteOff())
+        else if (message.isNoteOff())
         {
             if (envelope < 0.01) {
                 envelope = 0;

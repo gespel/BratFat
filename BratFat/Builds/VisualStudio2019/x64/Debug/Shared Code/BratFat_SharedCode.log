@@ -1,0 +1,6 @@
+﻿  BratFat.cpp
+C:\Users\stenh\Desktop\BratFat\BratFat\Source\BratFat.cpp(69,37): warning C4244: "=": Konvertierung von "double" in "float", möglicher Datenverlust
+C:\Users\stenh\Desktop\BratFat\BratFat\Source\BratFat.cpp(70,37): warning C4244: "=": Konvertierung von "double" in "float", möglicher Datenverlust
+C:\Users\stenh\Desktop\BratFat\BratFat\Source\BratFat.cpp(76,49): warning C4100: "synthNr": Unreferenzierter formaler Parameter
+C:\Users\stenh\Desktop\BratFat\BratFat\Source\BratFat.cpp(80,51): warning C4100: "synthNr": Unreferenzierter formaler Parameter
+  BratFat_SharedCode.vcxproj -> C:\Users\stenh\Desktop\BratFat\BratFat\Builds\VisualStudio2019\x64\Debug\Shared Code\BratFat.lib
