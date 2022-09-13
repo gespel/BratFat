@@ -145,14 +145,14 @@ void BratFatAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce
 
         if (message.isNoteOn())
         {
-            BratFat* x = new BratFat(this);
+            BratFat* x = new BratFat();
             x->setFrequency(juce::MidiMessage::getMidiNoteInHertz(message.getNoteNumber()));
             x->setSampleRate(getSampleRate());
+            x->loadSynthVector(&synths);
             synths.push_back(x);
         }
         else if (message.isNoteOff())
         {
-
             for (int i = 0; i < synths.size(); i++) {
                 if (synths[i]->getFrequency() == juce::MidiMessage::getMidiNoteInHertz(message.getNoteNumber())) {
                     BratFat* x = synths[i];
@@ -165,9 +165,17 @@ void BratFatAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce
     for (int i = 0; i < synths.size(); i++) {
         synths[i]->loadBuffer(&buffer);
         synths[i]->process();
+        if (synths[i]->isDead()) {
+            BratFat* a = synths[i];
+            synths.erase(synths.begin() + i);
+            delete a;
+            continue;
+        }
     }
 }
-
+bool BratFatAudioProcessor::isDead(BratFat* input) {
+    return input->isDead();
+}
 //==============================================================================
 bool BratFatAudioProcessor::hasEditor() const
 {

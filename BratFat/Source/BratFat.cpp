@@ -9,14 +9,15 @@
 */
 
 #include "BratFat.h"
+#include "PluginProcessor.h"
 
-BratFat::BratFat(BratFatAudioProcessor* p) {
-    this->processor = p->getThis();
-}
 void BratFat::loadBuffer(juce::AudioBuffer<float>* input) {
     outL = input->getWritePointer(0);
     outR = input->getWritePointer(1);
     buffer = input;
+}
+void BratFat::loadSynthVector(std::vector<BratFat*>* synths) {
+    this->synths = synths;
 }
 void BratFat::setSampleRate(double input) {
     sampleRate = input;
@@ -38,29 +39,24 @@ void BratFat::process() {
         updatePhase();
 
         auto finalSampleL = sineSample + squareSample1 + 0.2*squareSample2;
-        auto finalSampleR = sineSample + squareSample2+ 0.2*squareSample1;
+        auto finalSampleR = sineSample + squareSample2 + 0.2*squareSample1;
 
         finalSampleL *= 0.3;
         finalSampleR *= 0.3;
 
-        outL[sample] += finalSampleL * attackEnvelope;
-        outR[sample] += finalSampleR * attackEnvelope;
         if (attackEnvelope <= 1) {
             attackEnvelope += attackEnvelopeAdd;
         }
         if (this->isDying == true) {
-            if (this->releaseEnvelope < 0) {
-                for (int i = 0; i < processor->synths.size(); i++) {
-                    if (processor->synths[i] == this) {
-                        processor->synths.erase(processor->synths.begin() + i);
-                        delete this;
-                    }
-                }
-            }
-            else {
+            if (releaseEnvelope > 0) {
                 releaseEnvelope -= releaseEnvelopeSub;
             }
+            else {
+                dead = true;
+            }
         }
+        outL[sample] += finalSampleL * attackEnvelope * releaseEnvelope;
+        outR[sample] += finalSampleR * attackEnvelope * releaseEnvelope;
     }
 
 }
@@ -90,4 +86,6 @@ void BratFat::setFrequency(double f) {
 double BratFat::getFrequency() {
     return frequency;
 }
-
+bool BratFat::isDead() {
+    return dead;
+}
