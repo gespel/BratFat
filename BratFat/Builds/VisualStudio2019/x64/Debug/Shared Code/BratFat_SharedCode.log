@@ -1,6 +1,20 @@
 ﻿  BratFat.cpp
-C:\Users\stenh\Desktop\BratFat\BratFat\Source\BratFat.cpp(69,37): warning C4244: "=": Konvertierung von "double" in "float", möglicher Datenverlust
-C:\Users\stenh\Desktop\BratFat\BratFat\Source\BratFat.cpp(70,37): warning C4244: "=": Konvertierung von "double" in "float", möglicher Datenverlust
-C:\Users\stenh\Desktop\BratFat\BratFat\Source\BratFat.cpp(76,49): warning C4100: "synthNr": Unreferenzierter formaler Parameter
-C:\Users\stenh\Desktop\BratFat\BratFat\Source\BratFat.cpp(80,51): warning C4100: "synthNr": Unreferenzierter formaler Parameter
-  BratFat_SharedCode.vcxproj -> C:\Users\stenh\Desktop\BratFat\BratFat\Builds\VisualStudio2019\x64\Debug\Shared Code\BratFat.lib
+  PluginProcessor.cpp
+  PluginEditor.cpp
+C:\Users\stenh\Desktop\BratFat\BratFat\Source\BratFat.h(17,13): error C2061: Syntaxfehler: Bezeichner "BratFatAudioProcessor" (Quelldatei wird kompiliert ..\..\Source\PluginProcessor.cpp)
+C:\Users\stenh\Desktop\BratFat\BratFat\Source\BratFat.h(46,26): error C2143: Syntaxfehler: Es fehlt ";" vor "*" (Quelldatei wird kompiliert ..\..\Source\PluginProcessor.cpp)
+C:\Users\stenh\Desktop\BratFat\BratFat\Source\BratFat.h(46,26): error C4430: Fehlender Typspezifizierer - int wird angenommen. Hinweis: "default-int" wird von C++ nicht unterstützt. (Quelldatei wird kompiliert ..\..\Source\PluginProcessor.cpp)
+C:\Users\stenh\Desktop\BratFat\BratFat\Source\BratFat.h(46,39): error C2238: Unerwartete(s) Token vor ";" (Quelldatei wird kompiliert ..\..\Source\PluginProcessor.cpp)
+C:\Users\stenh\Desktop\BratFat\BratFat\Source\PluginProcessor.cpp(148,43): error C2664: "BratFat::BratFat(const BratFat &)" : Konvertierung von Argument 1 von "BratFatAudioProcessor *" in "const BratFat &" nicht möglich
+C:\Users\stenh\Desktop\BratFat\BratFat\Source\PluginProcessor.cpp(148,43): message : Ursache: Konvertierung von "BratFatAudioProcessor *" in "const BratFat" nicht möglich
+C:\Users\stenh\Desktop\BratFat\BratFat\Source\PluginProcessor.cpp(148,43): message : Quelltyp konnte von keinem Konstruktor angenommen werden, oder die Überladungsauflösung des Konstruktors ist mehrdeutig
+C:\Users\stenh\Desktop\BratFat\BratFat\Source\BratFat.h(47,1): message : Siehe Deklaration von "BratFat::BratFat" (Quelldatei wird kompiliert ..\..\Source\PluginProcessor.cpp)
+C:\Users\stenh\Desktop\BratFat\BratFat\Source\PluginProcessor.h(62,17): error C2065: "BratFat": nichtdeklarierter Bezeichner (Quelldatei wird kompiliert ..\..\Source\BratFat.cpp)
+C:\Users\stenh\Desktop\BratFat\BratFat\Source\PluginProcessor.h(62,25): error C2059: Syntaxfehler: ">" (Quelldatei wird kompiliert ..\..\Source\BratFat.cpp)
+C:\Users\stenh\Desktop\BratFat\BratFat\Source\BratFat.h(17,13): error C2061: Syntaxfehler: Bezeichner "BratFatAudioProcessor" (Quelldatei wird kompiliert ..\..\Source\PluginEditor.cpp)
+C:\Users\stenh\Desktop\BratFat\BratFat\Source\BratFat.cpp(14,21): error C2659: "=": Funktion als linker Operand.
+C:\Users\stenh\Desktop\BratFat\BratFat\Source\BratFat.h(46,26): error C2143: Syntaxfehler: Es fehlt ";" vor "*" (Quelldatei wird kompiliert ..\..\Source\PluginEditor.cpp)
+C:\Users\stenh\Desktop\BratFat\BratFat\Source\BratFat.h(46,26): error C4430: Fehlender Typspezifizierer - int wird angenommen. Hinweis: "default-int" wird von C++ nicht unterstützt. (Quelldatei wird kompiliert ..\..\Source\PluginEditor.cpp)
+C:\Users\stenh\Desktop\BratFat\BratFat\Source\BratFat.h(46,39): error C2238: Unerwartete(s) Token vor ";" (Quelldatei wird kompiliert ..\..\Source\PluginEditor.cpp)
+C:\Users\stenh\Desktop\BratFat\BratFat\Source\BratFat.cpp(46,54): warning C4244: "+=": Konvertierung von "double" in "float", möglicher Datenverlust
+C:\Users\stenh\Desktop\BratFat\BratFat\Source\BratFat.cpp(47,54): warning C4244: "+=": Konvertierung von "double" in "float", möglicher Datenverlust

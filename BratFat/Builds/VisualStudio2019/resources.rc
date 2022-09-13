@@ -15,6 +15,7 @@ BEGIN
   BEGIN
     BLOCK "040904E4"
     BEGIN
+      VALUE "CompanyName",  "Gouod Audio\0"
       VALUE "FileDescription",  "BratFat\0"
       VALUE "FileVersion",  "1.0.0\0"
       VALUE "ProductName",  "BratFat\0"

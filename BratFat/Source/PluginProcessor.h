@@ -59,9 +59,10 @@ public:
     bool isAddingFromMidiInput = false;
     //void juce::MidiInputCallback::handleIncomingMidiMessage(juce::MidiInput, const juce::MidiMessage& message) override;
     double f = 0.f;
-
+    std::vector<BratFat*> synths;
+    BratFatAudioProcessor* getThis();
 private:
     //==============================================================================
-    BratFat b;
+    
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (BratFatAudioProcessor)
 };

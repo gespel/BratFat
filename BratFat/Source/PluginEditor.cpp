@@ -26,11 +26,11 @@ BratFatAudioProcessorEditor::~BratFatAudioProcessorEditor()
 void BratFatAudioProcessorEditor::paint (juce::Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
-    g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));
+    g.fillAll (juce::Colours::black);
 
-    g.setColour (juce::Colours::white);
+    g.setColour (juce::Colours::red);
     g.setFont (15.0f);
-    g.drawFittedText ("" + std::to_string(audioProcessor.f), getLocalBounds(), juce::Justification::centred, 1);
+    g.drawFittedText ("Made by Gouod Audio", getLocalBounds(), juce::Justification::bottomLeft, 1);
 }
 
 void BratFatAudioProcessorEditor::resized()

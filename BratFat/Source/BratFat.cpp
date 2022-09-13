@@ -10,42 +10,19 @@
 
 #include "BratFat.h"
 
-BratFat::BratFat() 
-{
-
+BratFat::BratFat(BratFatAudioProcessor* p) {
+    this->processor = p->getThis();
 }
-void BratFat::loadBuffer(juce::AudioBuffer<float>* input, juce::MidiBuffer* midi) {
+void BratFat::loadBuffer(juce::AudioBuffer<float>* input) {
     outL = input->getWritePointer(0);
     outR = input->getWritePointer(1);
     buffer = input;
-    midiBuffer = midi;
 }
 void BratFat::setSampleRate(double input) {
     sampleRate = input;
 }
 void BratFat::processMidi() {
-    for (const auto metadata : (*midiBuffer))
-    {
-        auto message = metadata.getMessage();
-        const auto time = metadata.samplePosition;
-
-        if (message.isNoteOn())
-        {
-            envelope = 1;
-            frequency = juce::MidiMessage::getMidiNoteInHertz(message.getNoteNumber());
-        }
-        else if (message.isNoteOff())
-        {
-            if (envelope < 0.01) {
-                envelope = 0;
-            }
-            else
-            {
-                envelope -= 0.001;
-            }
-        }
-
-    }
+    
 }
 void BratFat::updatePhase() {
     phase1 += ((frequency) / sampleRate) * 2.0f * 3.14159265;
@@ -66,12 +43,29 @@ void BratFat::process() {
         finalSampleL *= 0.3;
         finalSampleR *= 0.3;
 
-        outL[sample] = finalSampleL * envelope;
-        outR[sample] = finalSampleR * envelope;
-      
-        
+        outL[sample] += finalSampleL * attackEnvelope;
+        outR[sample] += finalSampleR * attackEnvelope;
+        if (attackEnvelope <= 1) {
+            attackEnvelope += attackEnvelopeAdd;
+        }
+        if (this->isDying == true) {
+            if (this->releaseEnvelope < 0) {
+                for (int i = 0; i < processor->synths.size(); i++) {
+                    if (processor->synths[i] == this) {
+                        processor->synths.erase(processor->synths.begin() + i);
+                        delete this;
+                    }
+                }
+            }
+            else {
+                releaseEnvelope -= releaseEnvelopeSub;
+            }
+        }
     }
 
+}
+void BratFat::die() {
+    this->isDying = true;
 }
 double BratFat::sineSynth(double phase, uint8_t synthNr) {
     auto sample = (float)std::sin(phase);
@@ -89,5 +83,11 @@ double BratFat::squareSynth(double phase, uint8_t synthNr) {
         sample = 0;
     }
     return sample;
+}
+void BratFat::setFrequency(double f) {
+    frequency = f;
+}
+double BratFat::getFrequency() {
+    return frequency;
 }
 

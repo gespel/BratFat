@@ -10,7 +10,7 @@
 #include "PluginEditor.h"
 
 //==============================================================================
-BratFatAudioProcessor::BratFatAudioProcessor() : b(), AudioProcessor (BusesProperties()
+BratFatAudioProcessor::BratFatAudioProcessor() : AudioProcessor (BusesProperties()
                      #if ! JucePlugin_IsMidiEffect
                       #if ! JucePlugin_IsSynth
                        .withInput  ("Input",  juce::AudioChannelSet::stereo(), true)
@@ -50,7 +50,9 @@ bool BratFatAudioProcessor::producesMidi() const
     return false;
    #endif
 }
-
+BratFatAudioProcessor* BratFatAudioProcessor::getThis() {
+    return this;
+}
 bool BratFatAudioProcessor::isMidiEffect() const
 {
    #if JucePlugin_IsMidiEffect
@@ -94,7 +96,6 @@ void BratFatAudioProcessor::changeProgramName (int index, const juce::String& ne
 //==============================================================================
 void BratFatAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-    b.setSampleRate(sampleRate);
 }
 
 void BratFatAudioProcessor::releaseResources()
@@ -137,9 +138,34 @@ void BratFatAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce
 
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
+    for (const auto metadata : (midiMessages))
+    {
+        auto message = metadata.getMessage();
+        const auto time = metadata.samplePosition;
 
-    b.loadBuffer(&buffer, &midiMessages);
-    b.process();
+        if (message.isNoteOn())
+        {
+            BratFat* x = new BratFat(this);
+            x->setFrequency(juce::MidiMessage::getMidiNoteInHertz(message.getNoteNumber()));
+            x->setSampleRate(getSampleRate());
+            synths.push_back(x);
+        }
+        else if (message.isNoteOff())
+        {
+
+            for (int i = 0; i < synths.size(); i++) {
+                if (synths[i]->getFrequency() == juce::MidiMessage::getMidiNoteInHertz(message.getNoteNumber())) {
+                    BratFat* x = synths[i];
+                    x->die();
+                }
+            }
+
+        }
+    }
+    for (int i = 0; i < synths.size(); i++) {
+        synths[i]->loadBuffer(&buffer);
+        synths[i]->process();
+    }
 }
 
 //==============================================================================
