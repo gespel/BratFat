@@ -61,8 +61,7 @@ public:
     double f = 0.f;
     std::vector<BratFat*> synths;
     BratFatAudioProcessor* getThis();
-    void killSynth(BratFat* input);
-    bool isDead(BratFat* input);
+    int vectorCleanCounter = 0;
 private:
     //==============================================================================
     

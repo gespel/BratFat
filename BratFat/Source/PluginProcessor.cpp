@@ -165,16 +165,18 @@ void BratFatAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce
     for (int i = 0; i < synths.size(); i++) {
         synths[i]->loadBuffer(&buffer);
         synths[i]->process();
-        if (synths[i]->isDead()) {
-            BratFat* a = synths[i];
-            synths.erase(synths.begin() + i);
-            delete a;
-            continue;
-        }
     }
-}
-bool BratFatAudioProcessor::isDead(BratFat* input) {
-    return input->isDead();
+    if (vectorCleanCounter == 10000) {
+        for (int i = 0; i < synths.size(); i++) {
+            if (synths[i]->isDead()) {
+                BratFat* a = synths[i];
+                synths.erase(synths.begin() + i);
+                delete a;
+            }
+        }
+        vectorCleanCounter = 0;
+    }
+    vectorCleanCounter++;
 }
 //==============================================================================
 bool BratFatAudioProcessor::hasEditor() const

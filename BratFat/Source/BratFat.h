@@ -38,10 +38,10 @@ private:
     juce::AudioBuffer<float>* buffer;
     float* outL;
     float* outR;
-    double attackEnvelope = 0;
-    double attackEnvelopeAdd = 0.001f;
-    double releaseEnvelope = 1;
-    double releaseEnvelopeSub = 0.00005f;
+    float attackEnvelope = 0;
+    float attackEnvelopeAdd = 0.001f;
+    float releaseEnvelope = 1;
+    float releaseEnvelopeSub = 0.00005f;
     bool isDying;
     bool dead = false;
     std::vector<BratFat*>* synths;
