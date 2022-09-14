@@ -27,8 +27,8 @@ void BratFat::processMidi() {
 }
 void BratFat::updatePhase() {
     phase1 += ((frequency) / sampleRate) * 2.0f * 3.14159265;
-    phase2 += ((frequency*1.0001) / sampleRate) * 2.0f * 3.14159265;
-    phase3 += ((frequency*0.999) / sampleRate) * 2.0f * 3.14159265;
+    phase2 += ((frequency*(1 + fatness / 100)) / sampleRate) * 2.0f * 3.14159265;
+    phase3 += ((frequency* (1 - fatness / 100)) / sampleRate) * 2.0f * 3.14159265;
 }
 void BratFat::process() {
     for (int sample = 0; sample < buffer->getNumSamples(); sample++) {
@@ -47,12 +47,16 @@ void BratFat::process() {
         if (attackEnvelope <= 1) {
             attackEnvelope += attackEnvelopeAdd;
         }
+        if (attackEnvelope > 1 || attackEnvelope < 0) {
+            attackEnvelope = 1;
+        }
         if (this->isDying == true) {
             if (releaseEnvelope > 0) {
                 releaseEnvelope -= releaseEnvelopeSub;
             }
             else {
                 dead = true;
+                releaseEnvelope = 0;
             }
         }
         outL[sample] += finalSampleL * attackEnvelope * releaseEnvelope;
@@ -62,6 +66,18 @@ void BratFat::process() {
 }
 void BratFat::die() {
     this->isDying = true;
+}
+void BratFat::setGain(double input) {
+    this->gain = input;
+}
+void BratFat::setFatness(double input) {
+    this->fatness = input;
+}
+void BratFat::setRelease(float input) {
+    this->releaseEnvelopeSub = 1 / (input * 1000);
+}
+void BratFat::setAttack(float input) {
+    this->attackEnvelopeAdd = 1 / (input * 1000);
 }
 double BratFat::sineSynth(double phase, uint8_t synthNr) {
     auto sample = (float)std::sin(phase);

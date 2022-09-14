@@ -96,6 +96,14 @@ void BratFatAudioProcessor::changeProgramName (int index, const juce::String& ne
 //==============================================================================
 void BratFatAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
+    *filter.state = *juce::dsp::IIR::Coefficients<float>::makeLowPass(sampleRate, filterValue);
+    this->sr = sampleRate;
+    juce::dsp::ProcessSpec spec;
+    spec.sampleRate = sampleRate;
+    spec.maximumBlockSize = samplesPerBlock;
+    spec.numChannels = getTotalNumOutputChannels();
+    filter.prepare(spec);
+    filter.reset();
 }
 
 void BratFatAudioProcessor::releaseResources()
@@ -148,7 +156,10 @@ void BratFatAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce
             BratFat* x = new BratFat();
             x->setFrequency(juce::MidiMessage::getMidiNoteInHertz(message.getNoteNumber()));
             x->setSampleRate(getSampleRate());
-            x->loadSynthVector(&synths);
+            x->setGain(this->g);
+            x->setAttack(this->attack);
+            x->setFatness(this->fatness);
+            x->setRelease(this->release);
             synths.push_back(x);
         }
         else if (message.isNoteOff())
@@ -177,13 +188,44 @@ void BratFatAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce
         vectorCleanCounter = 0;
     }
     vectorCleanCounter++;
+
+    juce::dsp::AudioBlock<float> block(buffer);
+    filter.process(juce::dsp::ProcessContextReplacing<float>(block));
+
 }
 //==============================================================================
 bool BratFatAudioProcessor::hasEditor() const
 {
     return true; // (change this to false if you choose to not supply an editor)
 }
+void BratFatAudioProcessor::updateParams(float gain, float attack, float release, float fatness, float filter) {
+    for (int i = 0; i < synths.size(); i++) {
+        synths[i]->setGain(gain);
+        synths[i]->setAttack(attack);
+        synths[i]->setRelease(release);
+        synths[i]->setFatness(fatness);
+    }
+    this->g = gain;
+    this->attack = attack;
+    this->release = release;
+    this->fatness = fatness;
+    this->filterValue = filter;
+    *this->filter.state = *juce::dsp::IIR::Coefficients<float>::makeLowPass(this->sr, filterValue);
+}
+void BratFatAudioProcessor::setGainForSynths(float input) {
+    for (int i = 0; i < synths.size(); i++) {
+        synths[i]->setGain(input);
+    }
+}
+void BratFatAudioProcessor::setAttackForSynths(float input) {
 
+}
+void BratFatAudioProcessor::setReleaseForSynths(float input) {
+
+}
+void BratFatAudioProcessor::setFatnessForSynths(float input) {
+
+}
 juce::AudioProcessorEditor* BratFatAudioProcessor::createEditor()
 {
     return new BratFatAudioProcessorEditor (*this);

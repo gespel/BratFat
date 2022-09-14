@@ -1,19 +1,25 @@
-﻿  BratFat.cpp
-  PluginProcessor.cpp
-  PluginEditor.cpp
-C:\Users\stenh\Desktop\BratFat\BratFat\Source\BratFat.cpp(19,62): warning C4458: Deklaration von "synths" blendet Klassenmember aus
-C:\Users\stenh\Desktop\BratFat\BratFat\Source\BratFat.h(47,28): message : Siehe Deklaration von "BratFat::synths" (Quelldatei wird kompiliert ..\..\Source\BratFat.cpp)
-C:\Users\stenh\Desktop\BratFat\BratFat\Source\BratFat.cpp(58,72): warning C4244: "+=": Konvertierung von "double" in "float", möglicher Datenverlust
-C:\Users\stenh\Desktop\BratFat\BratFat\Source\BratFat.cpp(59,72): warning C4244: "+=": Konvertierung von "double" in "float", möglicher Datenverlust
-C:\Users\stenh\Desktop\BratFat\BratFat\Source\BratFat.cpp(66,49): warning C4100: "synthNr": Unreferenzierter formaler Parameter
-C:\Users\stenh\Desktop\BratFat\BratFat\Source\BratFat.cpp(70,51): warning C4100: "synthNr": Unreferenzierter formaler Parameter
+﻿  PluginProcessor.cpp
+C:\Users\stenh\Desktop\BratFat\BratFat\Source\PluginProcessor.h(71,18): warning C4305: "Initialisierung": Verkürzung von "double" in "float"
+C:\Users\stenh\Desktop\BratFat\BratFat\Source\PluginProcessor.h(72,19): warning C4305: "Initialisierung": Verkürzung von "double" in "float"
 C:\Users\stenh\Desktop\BratFat\BratFat\Source\PluginProcessor.cpp(81,52): warning C4100: "index": Unreferenzierter formaler Parameter
 C:\Users\stenh\Desktop\BratFat\BratFat\Source\PluginProcessor.cpp(85,63): warning C4100: "index": Unreferenzierter formaler Parameter
 C:\Users\stenh\Desktop\BratFat\BratFat\Source\PluginProcessor.cpp(90,79): warning C4100: "newName": Unreferenzierter formaler Parameter
 C:\Users\stenh\Desktop\BratFat\BratFat\Source\PluginProcessor.cpp(90,52): warning C4100: "index": Unreferenzierter formaler Parameter
-C:\Users\stenh\Desktop\BratFat\BratFat\Source\PluginProcessor.cpp(97,67): warning C4100: "samplesPerBlock": Unreferenzierter formaler Parameter
-C:\Users\stenh\Desktop\BratFat\BratFat\Source\PluginProcessor.cpp(97,51): warning C4100: "sampleRate": Unreferenzierter formaler Parameter
-C:\Users\stenh\Desktop\BratFat\BratFat\Source\PluginProcessor.cpp(193,69): warning C4100: "destData": Unreferenzierter formaler Parameter
-C:\Users\stenh\Desktop\BratFat\BratFat\Source\PluginProcessor.cpp(200,72): warning C4100: "sizeInBytes": Unreferenzierter formaler Parameter
-C:\Users\stenh\Desktop\BratFat\BratFat\Source\PluginProcessor.cpp(200,62): warning C4100: "data": Unreferenzierter formaler Parameter
+C:\Users\stenh\Desktop\BratFat\BratFat\Source\PluginProcessor.cpp(100,16): warning C4244: "=": Konvertierung von "double" in "float", möglicher Datenverlust
+C:\Users\stenh\Desktop\BratFat\BratFat\Source\PluginProcessor.cpp(201,112): warning C4458: Deklaration von "gain" blendet Klassenmember aus
+C:\Users\stenh\Desktop\BratFat\BratFat\Source\PluginProcessor.h(77,11): message : Siehe Deklaration von "BratFatAudioProcessor::gain"
+C:\Users\stenh\Desktop\BratFat\BratFat\Source\PluginProcessor.cpp(201,112): warning C4458: Deklaration von "attack" blendet Klassenmember aus
+C:\Users\stenh\Desktop\BratFat\BratFat\Source\PluginProcessor.h(71,11): message : Siehe Deklaration von "BratFatAudioProcessor::attack"
+C:\Users\stenh\Desktop\BratFat\BratFat\Source\PluginProcessor.cpp(201,112): warning C4458: Deklaration von "release" blendet Klassenmember aus
+C:\Users\stenh\Desktop\BratFat\BratFat\Source\PluginProcessor.h(72,11): message : Siehe Deklaration von "BratFatAudioProcessor::release"
+C:\Users\stenh\Desktop\BratFat\BratFat\Source\PluginProcessor.cpp(201,112): warning C4458: Deklaration von "fatness" blendet Klassenmember aus
+C:\Users\stenh\Desktop\BratFat\BratFat\Source\PluginProcessor.h(73,11): message : Siehe Deklaration von "BratFatAudioProcessor::fatness"
+C:\Users\stenh\Desktop\BratFat\BratFat\Source\PluginProcessor.cpp(201,112): warning C4458: Deklaration von "filter" blendet Klassenmember aus
+C:\Users\stenh\Desktop\BratFat\BratFat\Source\PluginProcessor.h(79,103): message : Siehe Deklaration von "BratFatAudioProcessor::filter"
+C:\Users\stenh\Desktop\BratFat\BratFat\Source\PluginProcessor.cpp(220,54): warning C4100: "input": Unreferenzierter formaler Parameter
+C:\Users\stenh\Desktop\BratFat\BratFat\Source\PluginProcessor.cpp(223,55): warning C4100: "input": Unreferenzierter formaler Parameter
+C:\Users\stenh\Desktop\BratFat\BratFat\Source\PluginProcessor.cpp(226,55): warning C4100: "input": Unreferenzierter formaler Parameter
+C:\Users\stenh\Desktop\BratFat\BratFat\Source\PluginProcessor.cpp(235,69): warning C4100: "destData": Unreferenzierter formaler Parameter
+C:\Users\stenh\Desktop\BratFat\BratFat\Source\PluginProcessor.cpp(242,72): warning C4100: "sizeInBytes": Unreferenzierter formaler Parameter
+C:\Users\stenh\Desktop\BratFat\BratFat\Source\PluginProcessor.cpp(242,62): warning C4100: "data": Unreferenzierter formaler Parameter
   BratFat_SharedCode.vcxproj -> C:\Users\stenh\Desktop\BratFat\BratFat\Builds\VisualStudio2019\x64\Debug\Shared Code\BratFat.lib

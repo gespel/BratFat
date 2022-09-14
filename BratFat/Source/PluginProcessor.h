@@ -62,8 +62,20 @@ public:
     std::vector<BratFat*> synths;
     BratFatAudioProcessor* getThis();
     int vectorCleanCounter = 0;
+    void setGainForSynths(float input);
+    void setAttackForSynths(float input);
+    void setReleaseForSynths(float input);
+    void setFatnessForSynths(float input);
+    void updateParams(float gain, float attack, float release, float fatness, float filter);
+    float g = 1;
+    float attack = 0.001;
+    float release = 0.001;
+    float fatness = 0;
+    float sr;
 private:
     //==============================================================================
-    
+    float gain = 1;
+    float filterValue = 440.f;
+    juce::dsp::ProcessorDuplicator<juce::dsp::IIR::Filter<float>, juce::dsp::IIR::Coefficients<float>>filter;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (BratFatAudioProcessor)
 };
